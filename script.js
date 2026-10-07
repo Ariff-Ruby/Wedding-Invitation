@@ -186,11 +186,11 @@ function downloadICS(event) {
 `BEGIN:VCALENDAR
 VERSION:2.0
 BEGIN:VEVENT
-DTSTART:20260516T033000Z
-DTEND:20260516T090000Z
-SUMMARY:Majlis Perkahwinan Adam & Faridah
+DTSTART:20261220T033000Z
+DTEND:20261220T090000Z
+SUMMARY:Majlis Perkahwinan Ariff & Ruby
 DESCRIPTION:Dengan segala hormatnya kami menjemput ke majlis perkahwinan putera kami.
-LOCATION:Dewan Seri Mutiara, Karangan, Kedah
+LOCATION:DIMA GARDEN, Karangan, Kedah
 END:VEVENT
 END:VCALENDAR`;
 
@@ -256,7 +256,7 @@ function showCopySuccess(button) {
 
 // Countdown Logic
 function updateCountdown() {
-    const targetDate = new Date("May 16, 2026 00:00:00").getTime();
+    const targetDate = new Date("Dec 20, 2026 00:00:00").getTime();
     const now = new Date().getTime();
     const difference = targetDate - now;
 
