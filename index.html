@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Walimatul Urus - Ariff & Ruby</title>
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://adam-faridah-wedding.github.io/Invitation/">
+    <meta property="og:title" content="Walimatul Urus - Adam & Faridah">
+    <meta property="og:description" content="Walimatul Urus Adam Safwan & Teh Faridah | 16 . 05 . 2026 | Dewan Seri Mutiara">
+    <meta property="og:image" content="https://adam-faridah-wedding.github.io/Invitation/images/thumbnail.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://adam-faridah-wedding.github.io/Invitation/">
+    <meta property="twitter:title" content="Walimatul Urus - Adam & Faridah">
+    <meta property="twitter:description" content="Walimatul Urus Adam Safwan & Teh Faridah | 16 . 05 . 2026 | Dewan Seri Mutiara">
+    <meta property="twitter:image" content="https://adam-faridah-wedding.github.io/Invitation/images/thumbnail.jpg">
+
+    <!-- Google Fonts for elegant typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="card-container">
+        <!-- Cover Section -->
+        <div class="cover-section">
+            <img src="https://assets.invait.my/images/sentuhan-lily/s22.webp" alt="" class="flower flower-top-right">
+            <img src="https://assets.invait.my/images/sentuhan-lily/s26.webp" alt="" class="flower flower-bottom-left">
+            
+            <button class="open-btn" onclick="openInvitation()">
+                <div class="names">
+                    Ariff<br>
+                    <span class="ampersand">&</span><br>
+                    Ruby
+                </div>
+                <div class="open-text">OPEN</div>
+            </button>
+        </div>
+
+        <!-- Inner Invitation Section -->
+        <div class="invitation-section">
+            
+            <div class="hero-section">
+                <!-- Left aligned flowers -->
+            <img src="https://assets.invait.my/images/sentuhan-lily/1.webp" class="inner-flower flower-1" alt="">
+            <img src="https://assets.invait.my/images/sentuhan-lily/2.webp" class="inner-flower flower-2" alt="">
+            <img src="https://assets.invait.my/images/sentuhan-lily/3.webp" class="inner-flower flower-3" alt="">
+            <img src="https://assets.invait.my/images/sentuhan-lily/4.webp" class="inner-flower flower-4" alt="">
+            <img src="https://assets.invait.my/images/sentuhan-lily/5.webp" class="inner-flower flower-5" alt="">
+
+            <!-- Center Content -->
+            <div class="invitation-content">
+                <p class="subtitle">Walimatul Urus</p>
+                <h1 class="main-names">Ariff<br><span class="ampersand">&</span><br>Ruby</h1>
+                <p class="date">20 . 12 . 2026 | AHAD</p>
+                <p class="venue">DIMA GARDEN</p>
+            </div>
+        </div>
+
+        <!-- Second Section: Countdown -->
+        <div class="countdown-section">
+            <div class="countdown-wrapper">
+                <h2 class="countdown-header">COUNTING DAYS</h2>
+                <div class="countdown-timer">
+                    <div class="time-box"><span id="days">00</span><small>Days</small></div>
+                    <div class="time-box"><span id="hours">00</span><small>Hours</small></div>
+                    <div class="time-box"><span id="minutes">00</span><small>Minutes</small></div>
+                    <div class="time-box"><span id="seconds">00</span><small>Seconds</small></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Third Section: Details (Scrolled View) -->
+        <div class="details-section">
+            <!-- Scrolling background flowers wrapped securely for independent transforms -->
+            <div class="scroll-flower-wrapper s-flower-1"><img src="https://assets.invait.my/images/sentuhan-lily/s21.webp" class="scroll-flower s-flower-1-img" alt=""></div>
+            <div class="scroll-flower-wrapper s-flower-2"><img src="https://assets.invait.my/images/sentuhan-lily/s22.webp" class="scroll-flower s-flower-2-img" alt=""></div>
+            <div class="scroll-flower-wrapper s-flower-3"><img src="https://assets.invait.my/images/sentuhan-lily/s23.webp" class="scroll-flower s-flower-3-img" alt=""></div>
+            <div class="scroll-flower-wrapper s-flower-4"  ><img src="https://assets.invait.my/images/sentuhan-lily/s24.webp" class="scroll-flower s-flower-4-img" alt=""></div>
+            <div class="scroll-flower-wrapper s-flower-5"><img src="https://assets.invait.my/images/sentuhan-lily/s25.webp" class="scroll-flower s-flower-5-img" alt=""></div>
+
+            <div class="glass-panel">
+                <p>Dengan segala hormatnya kami</p><br>
+                <p class="parent-name">Abdul Shariff bin Mahmed<br><span class="ampersand">&amp;</span><br>Ganeth Bee Binti Mohd Ghouse</p>
+                <p class="small-text">(PIHAK PENGANTIN LELAKI)</p><br>
+                <p>Dengan penuh rasa kesyukuran,<br>kami ingin menjemput<br>/Tuan/Puan/Encik/Cik<br>ke majlis perkahwinan putera kami</p><br>
+                <h2 class="glass-names">Mohamad Ariff bin Abdul Shariff <br><span class="ampersand">dengan pilihan hatinya</span><br>Siti Rubiatul Adawiyah binti Rosidi</h2>
+                
+                <div class="event-details">
+                    <p class="event-label">Date</p>
+                    <p class="event-value">16 . 05 . 2026 | SABTU</p>
+                    
+                    <p class="event-label">Time</p>
+                    <p class="event-value">11:30 AM &ndash; 5:00 PM</p>
+                    
+                    <p class="event-label">Venue</p>
+                    <p class="event-value">DIMA GARDEN</p>
+                </div>
+                
+                <div class="glass-buttons">
+                    <a href="#" class="glass-btn" onclick="openPopup(event, 'rsvp')">Sahkan Kehadiran</a>
+                    <a href="#" class="glass-btn outline" onclick="openPopup(event, 'wish-form-only')">Tulis Ucapan</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- RSVP Count Section -->
+        <div class="rsvp-count-section">
+            <div class="glass-panel rsvp-count-panel">
+                <div class="count-box">
+                    <p class="count-number" id="countHadir">0</p>
+                    <p class="count-label">HADIR</p>
+                </div>
+                <div class="count-divider"></div>
+                <div class="count-box">
+                    <p class="count-number" id="countTidakHadir">0</p>
+                    <p class="count-label">TIDAK HADIR</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fourth Section: Aturcara & Doa -->
+        <div class="aturcara-section">
+            <div class="glass-panel aturcara-panel">
+                <h3 class="aturcara-header">ATURCARA MAJLIS</h3>
+                <div class="aturcara-item">
+                    <span class="aturcara-time">11:30AM</span>
+                    <span class="aturcara-event">Majlis Bermula</span>
+                </div>
+                <div class="aturcara-item">
+                    <span class="aturcara-time">12:30PM</span>
+                    <span class="aturcara-event">Ketibaan Pengantin</span>
+                </div>
+                <div class="aturcara-item">
+                    <span class="aturcara-time">12:45PM</span>
+                    <span class="aturcara-event">Sesi bergambar bersama pengantin</span>
+                </div>
+                <div class="aturcara-item">
+                    <span class="aturcara-time">5:00PM</span>
+                    <span class="aturcara-event">Majlis Bersurai</span>
+                </div>
+            </div>
+
+            <div class="doa-section">
+                <h3 class="doa-header">Doa Untuk Pengantin</h3>
+                <p class="doa-text">"Semoga Allah memberkati kamu, dan memberkati atasmu, serta mengumpulkan kamu berdua dalam kebaikan"</p>
+            </div>
+        </div>
+        
+        <!-- Wish Section -->
+        <div class="wish-section">
+            <h3 class="wish-header">Wishes</h3>
+            <div class="wish-board" id="wishBoard">
+                <div class="glass-panel wish-card" id="emptyWishState">
+                    <p class="wish-message" style="font-style: normal; text-align: center; color: #777;">Loading wishes...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Credit -->
+        <div class="footer-credit">
+            <span>designed by adam safwan</span>
+        </div>
+
+    </div> <!-- Closes invitation-section -->
+
+    <!-- Bottom Navigation -->
+            <nav class="bottom-nav">
+                <a href="#" class="nav-item" onclick="openPopup(event, 'rsvp')">
+                    <i class="fa-regular fa-envelope"></i>
+                    <span>RSVP</span>
+                </a>
+                <a href="#" class="nav-item" onclick="openPopup(event, 'contact')">
+                    <i class="fa-solid fa-phone"></i>
+                    <span>Contact</span>
+                </a>
+
+                <a href="#" class="nav-item" onclick="openPopup(event, 'location')">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span>Location</span>
+                </a>
+                <a href="#" class="nav-item" onclick="openPopup(event, 'gift')">
+                    <i class="fa-solid fa-gift"></i>
+                    <span>Gift</span>
+                </a>
+                <a href="#" class="nav-item" onclick="openPopup(event, 'calendar')">
+                    <i class="fa-regular fa-calendar"></i>
+                    <span>Calendar</span>
+                </a>
+            </nav>
+
+        <!-- Popup Overlay -->
+        <div class="popup-overlay" id="popupOverlay" onclick="closePopup(event)"></div>
+
+        <!-- Popup Container -->
+        <div class="popup-container" id="popupContainer">
+            <button class="close-btn" onclick="closePopup(event)"><i class="fa-solid fa-xmark"></i></button>
+            
+            <!-- RSVP Content -->
+            <div class="popup-content" id="popup-rsvp">
+                <p class="rsvp-text">We look forward to celebrating with you!</p>
+                <p class="rsvp-subtext">Please let us know if you'll be attending:</p>
+                <div class="rsvp-buttons">
+                    <button class="action-btn" onclick="openPopup(event, 'rsvp-form')">Hadir</button>
+                    <button class="action-btn outline" onclick="openPopup(event, 'rsvp-form-tidak')">Tidak Hadir</button>
+                </div>
+            </div>
+
+            <!-- RSVP Form Content (Hadir) -->
+            <div class="popup-content" id="popup-rsvp-form">
+                <h2 class="popup-header">Details</h2>
+                <form class="wish-form" id="rsvpForm" onsubmit="submitRSVP(event)">
+                    <input type="text" class="wish-input" id="rsvpName" placeholder="Your Name" required>
+                    <input type="number" class="wish-input" id="rsvpGuests" placeholder="Number of Guests" min="1" max="10" required>
+                    <textarea class="wish-textarea" id="rsvpWish" placeholder="Wishes for the couple (Optional)" rows="3"></textarea>
+                    <button type="submit" class="action-btn">Confirm RSVP</button>
+                    <button type="button" class="action-btn outline" onclick="openPopup(event, 'rsvp')">Back</button>
+                </form>
+            </div>
+
+            <!-- RSVP Form Content (Tidak Hadir) -->
+            <div class="popup-content" id="popup-rsvp-form-tidak">
+                <h2 class="popup-header">Maaf</h2>
+                <form class="wish-form" id="rsvpFormTidak" onsubmit="submitRSVPTidak(event)">
+                    <p class="rsvp-subtext">Sila tinggalkan mesej untuk pengantin (Optional)</p>
+                    <input type="text" class="wish-input" id="rsvpNameTidak" placeholder="Nama Anda" required>
+                    <textarea class="wish-textarea" id="rsvpWishTidak" placeholder="Ucapan (Optional)" rows="3"></textarea>
+                    <button type="submit" class="action-btn">Confirm Tidak Hadir</button>
+                    <button type="button" class="action-btn outline" onclick="openPopup(event, 'rsvp')">Back</button>
+                </form>
+            </div>
+
+            <!-- Isolated Wish Form Content -->
+            <div class="popup-content" id="popup-wish-form-only">
+                <h2 class="popup-header">Tulis Ucapan</h2>
+                <form class="wish-form" id="wishFormOnly" onsubmit="submitWishOnly(event)">
+                    <p class="rsvp-subtext">Sila tinggalkan ucapan manis untuk pengantin</p>
+                    <input type="text" class="wish-input" id="wishNameOnly" placeholder="Nama Anda" required>
+                    <textarea class="wish-textarea" id="wishMessageOnly" placeholder="Tuliskan ucapan anda di sini..." rows="4" required></textarea>
+                    <button type="submit" class="action-btn">Hantar Ucapan</button>
+                    <button type="button" class="action-btn outline" onclick="closePopup()">Batal</button>
+                </form>
+            </div>
+
+            <!-- Contact Content -->
+            <div class="popup-content" id="popup-contact">
+                <h2 class="popup-header">Contact</h2>
+                <div class="contact-item">
+                    <div class="contact-info">
+                        <strong>Shariff</strong><br>
+                        <span>+60 13-447 8909</span>
+                    </div>
+                    <a href="https://wa.me/60134478909" target="_blank" class="wa-btn"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-info">
+                        <strong>Srizan</strong><br>
+                        <span>+60 16-416 6805</span>
+                    </div>
+                    <a href="https://wa.me/60164166805" target="_blank" class="wa-btn"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-info">
+                        <strong>mubbin</strong><br>
+                        <span>+60 17-449 3801</span>
+                    </div>
+                    <a href="https://wa.me/60174493801" target="_blank" class="wa-btn"><i class="fa-brands fa-whatsapp"></i>WhatsApp</a>
+                </div>
+            </div>
+
+            <!-- Location Content -->
+            <div class="popup-content" id="popup-location">
+                <h2 class="popup-header">Location</h2>
+                <div class="iframe-container">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7941.465364838588!2d100.61718674455251!3d5.606446551111605!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31b52b8e682d204d%3A0xb277610831e95e4b!2sDIMA%20Garden!5e0!3m2!1sen!2smy!4v1791386209883!5m2!1sen!2smy" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>"
+                        <!-- width="600" 
+                        height="250" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"> -->
+                    </iframe>
+                </div>
+                <div class="location-buttons">
+                    <a href="https://maps.app.goo.gl/oiimQWH4LDiW7UxB6" target="_blank" class="action-btn"><i class="fa-solid fa-map-location-dot"></i> Google Maps</a>
+                    <a href="https://www.waze.com/en/live-map/directions/my/kedah/karangan/dewan-seri-mutiara-sg-kob?place=ChIJc0X-2qgztTERnJ-RukYOrvE" target="_blank" class="action-btn outline"><i class="fa-brands fa-waze"></i> Waze</a>
+                </div>
+            </div>
+
+            <!-- Gift Content -->
+            <div class="popup-content" id="popup-gift">
+                <h2 class="popup-header">Gift</h2>
+                <div class="qr-section">
+                    <div class="qr-card">
+                        <div class="qr-placeholder"><img src="images/qr adam.png" alt="qr-adam"></div>
+                        <p><strong>Adam Safwan</strong><br>Maybank<br><span class="account-number">152116550656 <i class="fa-regular fa-copy copy-icon" onclick="copyText(this, '152116550656')" title="Copy Account Number"></i></span></p>
+                        <a href="images/qr adam.png" download="qr_adam.png" class="action-btn" style="margin-top: 15px; margin-bottom: 0px;"><i class="fa-solid fa-download"></i> Download QR</a>
+                    </div>
+                    <div class="qr-card">
+                        <div class="qr-placeholder"><img src="images/qr teh.png" alt="qr-teh"></div>
+                        <p><strong>Teh Faridah</strong><br>Bank Islam<br><span class="account-number">02057022773106 <i class="fa-regular fa-copy copy-icon" onclick="copyText(this, '02057022773106')" title="Copy Account Number"></i></span></p>
+                        <a href="images/qr teh.png" download="qr_teh.png" class="action-btn" style="margin-top: 15px; margin-bottom: 0px;"><i class="fa-solid fa-download"></i> Download QR</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Calendar Content -->
+            <div class="popup-content" id="popup-calendar">
+                <h2 class="popup-header">Calendar</h2>
+                <div class="calendar-buttons">
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Majlis+Perkahwinan+Adam+%26+Faridah&dates=20260516T033000Z/20260516T090000Z&details=Dengan+segala+hormatnya+kami+menjemput+ke+majlis+perkahwinan+putera+kami&location=Dewan+Seri+Mutiara,+Karangan,+Kedah" target="_blank" class="action-btn"><i class="fa-brands fa-google"></i> Google Calendar</a>
+                    <a href="#" onclick="downloadICS(event)" class="action-btn outline"><i class="fa-brands fa-apple"></i> Apple Calendar</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scroll Hint (animated pointing finger above audio control) -->
+        <div class="scroll-hint" aria-hidden="true">
+            <i class="fa-regular fa-hand-pointer"></i>
+        </div>
+
+        <!-- Floating Audio Control (expands into music panel on click) -->
+        <div class="audio-control" id="audioControl">
+            <div class="audio-panel" id="audioPanel">
+                <iframe id="ytFrame"
+                    data-src="https://www.yout-ube.com/embed/k85mRPqvMbE?si=hT0_-_elAPRfi8hr&amp;start=7&amp;autoplay=1"
+                    title="YouTube video player"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; autoplay"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allowfullscreen>
+                </iframe>
+            </div>
+            <button class="audio-toggle" onclick="toggleAudio()" aria-label="Toggle music">
+                <i class="fa-solid fa-volume-high" id="audioIcon"></i>
+            </button>
+            <!-- <audio id="bgAudio" src="song/background-music.mp3" preload="auto" loop></audio> -->
+        </div>
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
+

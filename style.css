@@ -1,0 +1,1075 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f3f4f6; /* Light gray background to highlight the white card */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Start from top so it natively scrolls down */
+    min-height: 100vh;
+    min-height: 100dvh; /* Dynamic height for mobile browsers */
+    font-family: 'Montserrat', sans-serif;
+    overflow: hidden; /* Locked initially before they press Open */
+    margin: 0;
+}
+
+.card-container {
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 450px; /* Mobile width container */
+    min-height: 100vh;
+    min-height: 100dvh; /* Dynamic height for mobile browsers */
+    position: relative;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.08); /* Soft drop shadow */
+    overflow-x: clip; 
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.flower {
+    position: absolute;
+    z-index: 1;
+    pointer-events: none;
+    object-fit: contain;
+}
+
+.flower-top-right {
+    top: 0;
+    right: 0;
+    width: 65%; 
+    transform: translate(29%, -5%); /* Position exactly at the corner */
+}
+
+.flower-bottom-left {
+    bottom: 0;
+    left: 0;
+    width: 75%;
+    transform: translate(-10%, 10%); /* Position exactly at the corner */
+}
+
+.open-btn {
+    background-color: #ffffff;
+    border: none;
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); /* Shadow for button to give floating effect */
+    z-index: 10;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: box-shadow 0.2s ease; /* Removed 'transform' transition to prevent GSAP fighting */
+}
+
+.open-btn:hover {
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+.open-btn:active {
+    transform: scale(0.95);
+}
+
+.names {
+    font-family: 'Great Vibes', cursive;
+    font-size: 22px;
+    color: #2c2c2c;
+    line-height: 1;
+    text-align: center;
+    margin-bottom: 6px;
+    margin-top: 4px;
+}
+
+.names .ampersand {
+    font-size: 16px;
+}
+
+.open-text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: #000000;
+}
+
+.cover-section {
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Removed 'transition' because GSAP perfectly orchestrates opacity and transform in JS */
+    z-index: 5;
+}
+
+.card-container.opened .cover-section {
+    pointer-events: none;
+}
+
+/* --- Inner Invitation Section --- */
+.invitation-section {
+    width: 100%;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 10;
+    display: none; 
+    padding-bottom: 130px; /* Safe cushion for the navigation bar */
+}
+
+.card-container.opened .invitation-section {
+    display: block;
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* Hero Section */
+.hero-section {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    /* GSAP perfectly scrubs opacity and positioning natively */
+}
+
+/* Inner Flowers */
+.inner-flower {
+    position: absolute;
+    left: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0; 
+    object-fit: contain;
+    will-change: transform, opacity; /* Force hardware acceleration */
+}
+
+.flower-1 { top: -7%; left: -15%; width: 55%; }
+.flower-2 { top: 20%; left: -15%; width: 45%; }
+.flower-3 { top: 36%; left: -18%; width: 55%; }
+.flower-4 { bottom: 10%; left: -25%; width: 60%; }
+.flower-5 { bottom: -10%; left: 20%; width: 60%; rotate: 25deg; }
+
+/* GSAP handles entrance, we only need continuous sway */
+.card-container.opened .inner-flower {
+    opacity: 1; /* GSAP brings it to 1, this acts as final state */
+}
+
+/* Transform origins for natural sway feel */
+.flower-1 { transform-origin: left top; }
+.flower-2 { transform-origin: left center; }
+.flower-3 { transform-origin: left bottom; }
+.flower-4 { transform-origin: center bottom; }
+.flower-5 { transform-origin: center bottom; rotate: 25deg; }
+
+
+
+/* Invitation Typography */
+.invitation-content {
+    text-align: center;
+    z-index: 2;
+    padding-left: 20px; /* Offset to make room for flowers on the left */
+    color: #2c2c2c;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 60px; /* Give room for navigation */
+}
+
+.card-container.opened .invitation-content {
+    /* Entrance is handled by GSAP, keeping opacity for normal state */
+    opacity: 1;
+}
+
+
+
+.subtitle {
+    font-size: 11px;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+.main-names {
+    font-family: 'Great Vibes', cursive;
+    font-size: 55px;
+    font-weight: normal;
+    line-height: 1;
+    margin-bottom: 35px;
+    color: #2c2c2c;
+}
+
+.main-names .ampersand {
+    font-size: 28px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    display: block;
+    margin: 15px 0;
+}
+
+.date {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+}
+.venue {
+    font-size: 11px;
+    color: #555;
+    font-weight: 500;
+}
+
+/* Bottom Navigation */
+.bottom-nav {
+    position: fixed;
+    bottom: 25px; /* Float above the bottom */
+    bottom: calc(25px + env(safe-area-inset-bottom)); /* Safe area for iOS */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%; /* Float effect with margins */
+    max-width: 400px;
+    height: 65px;
+    background: rgba(255, 255, 255, 0.7); /* Slightly translucent glass effect */
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 20;
+    border: 1px solid rgba(255, 255, 255, 0.8); /* Refined glass border completely around */
+    border-radius: 40px; /* Fully rounded "pill" shape */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12); /* Soft floating drop shadow */
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+.card-container.opened .bottom-nav {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: #4a4a4a;
+    transition: color 0.3s;
+    transition: 0.3s ease;
+}
+
+.nav-item i {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.nav-item span {
+    font-size: 9px;
+    font-weight: 600;
+}
+
+.nav-item:hover {
+    transform: scale(1.3);
+}
+
+/* --- Popups --- */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 30;
+    visibility: hidden; /* GSAP autoAlpha handles this automatically */
+    opacity: 0;
+    pointer-events: none;
+}
+
+.popup-container {
+    position: fixed;
+    bottom: 0; /* Anchor at bottom */
+    left: 50%;
+    transform: translate(-50%, 100%); /* Start completely off-screen at bottom */
+    width: 100%;
+    max-width: 450px;
+    max-height: 80vh;
+    background: #ffffff;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    box-shadow: 0 -5px 25px rgba(0,0,0,0.1);
+    z-index: 40;
+    padding: 40px 20px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+/* GSAP dynamically changes translation and autoAlpha, these overrides are removed */
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: #f0f0f0;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #555;
+    transition: background 0.2s;
+}
+
+.close-btn:hover { background: #e0e0e0; }
+
+.popup-content {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+}
+
+.popup-content.active {
+    display: flex;
+}
+
+.popup-header {
+    font-family: 'Great Vibes', cursive;
+    font-size: 32px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.action-btn {
+    background: #ffffff;
+    border: 1px solid #ddd;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: #333;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom: 15px;
+    text-decoration: none;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+.action-btn.outline {
+    background: transparent;
+    border: 1px solid #999;
+}
+.action-btn:hover {
+    background: #fafafa;
+}
+
+/* RSVP specific */
+.rsvp-text { font-size: 14px; font-weight: 500; margin-bottom: 15px; }
+.rsvp-subtext { font-size: 12px; margin-bottom: 20px; color: #555; }
+.rsvp-buttons { width: 100%; display: flex; gap: 10px; flex-direction: column; }
+
+/* Contact specific */
+.contact-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    text-align: left;
+}
+.contact-info strong { font-size: 15px; color: #2c2c2c; }
+.contact-info span { font-size: 12px; color: #666; }
+.wa-btn {
+    background: #25D366;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.wa-btn:hover { background: #20BA56; }
+
+/* Iframe containers */
+.iframe-container { width: 100%; border-radius: 10px; overflow: hidden; margin-bottom: 15px; border: 1px solid #eee; }
+
+/* Location specific */
+.location-buttons { width: 100%; display: flex; flex-direction: column; }
+
+/* Gift specific */
+.qr-section { display: flex; flex-direction: column; gap: 20px; width: 100%; }
+.qr-card {
+    flex: 1;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #fafafa;
+}
+.qr-placeholder {
+    width: 160px; height: 160px;
+    background: #ffffff;
+    display: flex; justify-content: center; align-items: center;
+    margin-bottom: 15px; border-radius: 8px; border: 1px solid #ddd; color: #aaa; font-size: 11px;
+    padding: 8px;
+}
+
+.qr-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 3px;
+}
+.qr-card p { font-size: 11px; line-height: 1.6; color: #555; margin-top: 5px;}
+.qr-card strong { font-size: 14px; color: #2c2c2c; font-weight: 600; }
+
+.account-number {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #333;
+    background: #f0f0f0;
+    padding: 4px 10px;
+    border-radius: 6px;
+    margin-top: 5px;
+}
+.copy-icon {
+    font-size: 14px;
+    color: #666;
+    cursor: pointer;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+.copy-icon:hover {
+    color: #2c2c2c;
+    transform: scale(1.1);
+}
+
+/* Calendar specific */
+.calendar-buttons { width: 100%; display: flex; flex-direction: column; }
+
+/* --- Second Section: Countdown --- */
+.countdown-section {
+    position: relative;
+    width: 100%;
+    padding: 60px 0 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 3;
+}
+
+/* --- Third Section: Details --- */
+.details-section {
+    position: relative;
+    width: 100%;
+    padding: 10px 0 80px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 2;
+}
+
+.scroll-flower-wrapper {
+    position: absolute;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.scroll-flower {
+    width: 100%;
+    object-fit: contain;
+    pointer-events: none;
+    will-change: transform; /* Force hardware acceleration for infinite loop */
+}
+
+.s-flower-1 { top: 0%; right: -10%; width: 50%; }
+.s-flower-1-img { --rotation:10deg; transform: rotate(var(--rotation)); transform-origin: right top; }
+
+.s-flower-2 { top: 5%; right: -20%; width: 60%; }
+.s-flower-2-img { --rotation: -15deg; transform: rotate(var(--rotation)); transform-origin: right top; }
+
+.s-flower-3 { top: 45%; right: -25%; width: 50%; }
+.s-flower-3-img { --rotation: -5deg; transform: rotate(var(--rotation)); transform-origin: right center; }
+
+.s-flower-4 { bottom: -5%; left: -20%; width: 50%; }
+.s-flower-4-img { --rotation: 25deg; transform: rotate(var(--rotation)); transform-origin: center bottom; }
+
+.s-flower-5 { bottom: -10%; right: -20%; width: 60%; }
+.s-flower-5-img { --rotation: -2deg; transform: rotate(var(--rotation)); transform-origin: right bottom; }
+
+
+
+/* Countdown Styles */
+.countdown-wrapper {
+    z-index: 5;
+    text-align: center;
+    margin-bottom: 40px;
+    width: 85%;
+}
+.countdown-header {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: #444;
+    margin-bottom: 25px;
+}
+.countdown-timer {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+.time-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.time-box span {
+    font-size: 26px;
+    font-family: 'Montserrat', sans-serif;
+    color: #444;
+}
+.time-box small {
+    font-size: 10px;
+    margin-top: 5px;
+    color: #888;
+    font-weight: 500;
+}
+
+/* Glass Panel Styles */
+.glass-panel {
+    background: rgba(255, 255, 255, 0);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    width: 85%;
+    border-radius: 12px;
+    padding: 35px 20px;
+    text-align: center;
+    z-index: 5;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.051);
+    border: 1px solid rgba(255,255,255,0.8);
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+}
+
+
+.glass-panel p {
+    font-size: 11px;
+    color: #444;
+    line-height: 1.6;
+}
+.glass-panel .parent-name {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+}
+.glass-panel .small-text {
+    font-size: 8px;
+    color: #777;
+    margin-bottom: 10px;
+}
+.glass-panel .ampersand {
+    font-family: 'Great Vibes', cursive;
+    font-size: 16px;
+}
+.glass-names {
+    font-family: 'Great Vibes', cursive;
+    font-size: 42px;
+    font-weight: normal;
+    color: #2c2c2c;
+    margin-top: 25px;
+    line-height: 1.1;
+}
+.glass-names .ampersand {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    color: #666;
+    letter-spacing: 1px;
+    display: inline-block;
+    padding-left: 1px; /* Compensates for the letter-spacing pushing text slightly right */
+    margin: 15px auto; /* Perfect vertical symmetry */
+}
+
+.glass-panel .event-details {
+    margin-top: 35px;
+    margin-bottom: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.glass-panel .event-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: #555;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+.glass-panel .event-value {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    color: #2c2c2c;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+.glass-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    width: 100%;
+}
+.glass-btn {
+    flex: 1;
+    padding: 12px 0;
+    border: 1px solid #333;
+    border-radius: 8px;
+    background: transparent;
+    color: #333;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.3s ease;
+}
+.glass-btn:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+/* --- RSVP Count Section --- */
+.rsvp-count-section {
+    position: relative;
+    width: 100%;
+    padding: 10px 0 20px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+}
+
+.rsvp-count-panel {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 85%;
+    padding: 25px 20px;
+    margin-bottom: 20px;
+}
+
+.count-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+}
+
+.count-number {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 45px;
+    font-weight: 700;
+    color: #2c2c2c;
+    margin-bottom: 5px;
+}
+
+.count-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    font-weight: 600;
+    color: #555;
+}
+
+.count-divider {
+    width: 1px;
+    height: 45px;
+    background: rgba(0,0,0,0.1);
+    margin: 0 10px;
+}
+
+/* --- Fourth Section: Aturcara --- */
+.aturcara-section {
+    position: relative;
+    width: 100%;
+    padding: 20px 0 80px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 2;
+}
+
+.aturcara-panel {
+    margin-bottom: 50px;
+    padding: 35px 20px;
+    width: 85%;
+}
+
+.aturcara-header {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    letter-spacing: 2px;
+    color: #333;
+    margin-bottom: 30px;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.aturcara-item {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.aturcara-item:last-child {
+    margin-bottom: 0;
+}
+
+.aturcara-time {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: #2c2c2c;
+    margin-bottom: 3px;
+    letter-spacing: 0.5px;
+}
+
+.aturcara-event {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    color: #555;
+    text-align: center;
+}
+
+/* Doa Section */
+.doa-section {
+    width: 85%;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 40px;
+}
+
+.doa-header {
+    font-family: 'Great Vibes', cursive;
+    font-size: 26px;
+    color: #333;
+    margin-bottom: 15px;
+    font-weight: normal;
+}
+
+.doa-text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    line-height: 1.6;
+    color: #555;
+    padding: 0;
+}
+
+/* --- Wish Section --- */
+.wish-section {
+    position: relative;
+    width: 100%;
+    padding: 10px 0 80px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 2;
+}
+
+.wish-header {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+    letter-spacing: 2px;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.wish-board {
+    width: 85%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-height: 520px; /* Limits height to approximately 5 boxes */
+    overflow-y: auto; /* Enables vertical scrolling when content exceeds the max-height */
+    padding: 15px 10px 15px 0px; /* Added right padding so to accommodate scrollbar */
+    
+    /* Inner shadow for scroll illusion: stronger top, softer bottom */
+    box-shadow: inset 0px 15px 20px -15px rgba(0, 0, 0, 0.15),
+                inset 0px -15px 20px -15px rgba(0, 0, 0, 0.06);
+    border-radius: 12px;
+    
+    /* Elegant scrollbar for Firefox */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.15) transparent;
+}
+
+/* Minimalist elegant scrollbar for Chrome, Safari, and Edge */
+.wish-board::-webkit-scrollbar {
+    width: 4px;
+}
+.wish-board::-webkit-scrollbar-track {
+    background: transparent;
+}
+.wish-board::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+}
+.wish-board::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.wish-card {
+    padding: 25px 20px;
+    margin-bottom: 0;
+    width: 100%;
+}
+
+.wish-message {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    color: #444;
+    line-height: 1.6;
+    margin-bottom: 12px;
+    font-style: italic;
+    text-align: center;
+}
+
+.wish-name {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #2c2c2c;
+    text-align: right;
+}
+.wish-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+}
+
+.wish-input, .wish-textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.4);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    color: #333;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.wish-textarea {
+    resize: none;
+}
+
+.wish-input:focus, .wish-textarea:focus {
+    background: rgba(255, 255, 255, 0.8);
+    border-color: rgba(0,0,0,0.3);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.wish-submit {
+    margin-top: 5px;
+    background: transparent;
+    cursor: pointer;
+    width: 100%;
+}
+
+/* --- Floating Audio Control (expands into music panel) --- */
+.audio-control {
+    position: fixed;
+    bottom: 100px; /* Safely above the bottom navigation bar */
+    right: 30px;
+    width: 45px;
+    height: 45px;
+    background: #ffffff;
+    border-radius: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    color: #444;
+    font-size: 18px;
+    cursor: pointer;
+    z-index: 25;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s ease, width 0.45s cubic-bezier(0.4, 0, 0.2, 1), height 0.45s cubic-bezier(0.4, 0, 0.2, 1), border-radius 0.45s cubic-bezier(0.4, 0, 0.2, 1), background 0.2s ease, transform 0.2s ease;
+}
+
+.audio-control .audio-toggle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 45px;
+    height: 45px;
+    border: none;
+    background: transparent;
+    color: inherit;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+}
+
+.audio-control .audio-panel {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease 0.15s;
+}
+
+.audio-control .audio-panel iframe {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 245px;
+    height: 138px;
+    border: 0;
+    border-radius: 15px;
+    pointer-events: none; /* Ignore clicks while panel is animating */
+    opacity: 0;
+    transition: opacity 0.3s ease 0.25s;
+}
+
+.audio-control.expanded .audio-panel iframe {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.card-container.opened .audio-control {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.audio-control:active {
+    transform: scale(0.97);
+}
+
+.audio-control.muted {
+    background: #f8f8f8;
+    color: #999;
+}
+
+/* Expanded state: the icon grows into a big rounded panel */
+.audio-control.expanded {
+    width: 280px;
+    height: 180px;
+    border-radius: 25px;
+}
+
+.audio-control.expanded .audio-panel {
+    opacity: 1;
+}
+
+.audio-control.expanded.muted {
+    background: #f8f8f8;
+}
+
+/* --- Animated Scroll Hint (Hand waving above audio control) --- */
+.scroll-hint {
+    position: fixed;
+    padding-left: 15px;
+    padding-top: 15px;
+    bottom: 155px; /* Directly above the audio control (100px + 45px height + 10px gap) */
+    right: 30px;
+    width: 45px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    color: #444;
+    z-index: 25;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s ease;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    border-radius: 10px;
+    /* box-shadow: 0 4px 15px rgba(0,0,0,0.15); */
+}
+
+.card-container.opened .scroll-hint {
+    opacity: 1;
+}
+
+.scroll-hint i {
+    animation: handWave 2s ease-in-out infinite;
+    transform-origin: bottom center;
+}
+
+@keyframes handWave {
+    0%   { transform: translateY(0) rotate(-50deg); }
+    50%  { transform: translateY(-20px) rotate(-50deg); }
+    100% { transform: translateY(0) rotate(-50deg); }
+}
+
+/* Hide scroll hint once user has scrolled down */
+.card-container.opened .scroll-hint.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* --- Footer Credit --- */
+.footer-credit {
+    width: 100%;
+    text-align: center;
+    padding: 30px 0 0 0; 
+    z-index: 2;
+    position: relative;
+}
+
+.footer-credit span {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: rgba(44, 44, 44, 0.4);
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.footer-credit span:hover {
+    color: rgba(44, 44, 44, 0.8);
+}
+
+
