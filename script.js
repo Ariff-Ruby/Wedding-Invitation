@@ -625,8 +625,8 @@ function fetchWishes() {
 // ═══════════════════════════════════════════════════════════════════
 
 // Song config: video ID + start offset (seconds) from the old ?start=7 URL
-const MUSIC_VIDEO_ID = 'k85mRPqvMbE';
-const MUSIC_START_SECONDS = 7;
+const MUSIC_VIDEO_ID = 'yHKyno32R18&list=RDyHKyno32R18';
+const MUSIC_START_SECONDS = 5;
 
 window.ytPlayerReady = false;
 window.ytApiReady = false;
