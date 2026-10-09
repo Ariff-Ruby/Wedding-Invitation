@@ -106,9 +106,14 @@ function openInvitation() {
     // 1. Button press effect (snappy press and pop)
     tl.to(btn, { scale: 0.9, duration: 0.1, ease: "power1.out" })
         .to(btn, { scale: 1, duration: 0.2, ease: "back.out(2)" })
-      // 2. Cover Section morphs away overlapping the pop-back effect!
-        .to('.cover-section', { scale: 1.05, autoAlpha: 0, duration: 0.8, ease: "power2.inOut" }, "<0.1")
-      // 3. Inner Flowers smoothly slide in from the outer edge to their origin
+      // 2. Cover Section fades out fully first (sequential handoff)
+        .to('.cover-section', { autoAlpha: 0, duration: 0.6, ease: "power2.inOut" }, "<0.1")
+      // 3. Hero section fades in as one unit AFTER the cover is gone
+        .fromTo('.hero-section',
+            { autoAlpha: 0 },
+            { autoAlpha: 1, duration: 0.8, ease: "power2.out" }
+        )
+      // 4. Inner Flowers smoothly slide in from the outer edge to their origin
         .fromTo('.inner-flower', 
             { 
                 x: (i, target) => target.classList.contains('flower-5') ? 0 : -150, 
@@ -118,7 +123,7 @@ function openInvitation() {
             { x: 0, y: 0, opacity: 1, duration: 1.8, ease: "power2.out" }, 
             "-=0.5"
         )
-      // 4. Invitation Content gently lifts into place
+      // 5. Invitation Content gently lifts into place
         .fromTo('.invitation-content', 
             { y: 30, opacity: 0 },
             { y: 0, opacity: 1, duration: 1, ease: "power2.out" },

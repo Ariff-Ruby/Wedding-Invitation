@@ -139,7 +139,22 @@ body {
     justify-content: center;
     align-items: center;
     flex-shrink: 0;
+    overflow: hidden;
     /* GSAP perfectly scrubs opacity and positioning natively */
+}
+
+/* Couple portrait backdrop behind the hero content */
+.hero-photo-backdrop {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.35)),
+        url("images/gambar 1.jpeg");
+    background-size: cover;
+    background-position: center 25%; /* bias toward faces; crop happens at feet/sky */
+    background-repeat: no-repeat;
+    pointer-events: none;
 }
 
 /* Inner Flowers */
