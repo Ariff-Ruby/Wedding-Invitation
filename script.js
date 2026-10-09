@@ -627,7 +627,7 @@ function fetchWishes() {
 // Song config: video ID + start offset (seconds)
 // Source URL: https://www.youtube.com/watch?v=yHKyno32R18
 const MUSIC_VIDEO_ID = 'yHKyno32R18';
-const MUSIC_START_SECONDS = 0;
+const MUSIC_START_SECONDS = 5;
 
 window.ytPlayerReady = false;
 window.ytApiReady = false;
