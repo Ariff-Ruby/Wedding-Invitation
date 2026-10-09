@@ -624,9 +624,10 @@ function fetchWishes() {
 // "Open" gesture, toggle via the floating button, loop at song end.
 // ═══════════════════════════════════════════════════════════════════
 
-// Song config: video ID + start offset (seconds) from the old ?start=7 URL
-const MUSIC_VIDEO_ID = 'yHKyno32R18&list=RDyHKyno32R18';
-const MUSIC_START_SECONDS = 5;
+// Song config: video ID + start offset (seconds)
+// Source URL: https://www.youtube.com/watch?v=yHKyno32R18
+const MUSIC_VIDEO_ID = 'yHKyno32R18';
+const MUSIC_START_SECONDS = 0;
 
 window.ytPlayerReady = false;
 window.ytApiReady = false;
