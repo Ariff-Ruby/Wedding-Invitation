@@ -9,17 +9,11 @@ function openInvitation() {
     if (bounceTween) bounceTween.kill();
     gsap.set(btn, { y: 0 }); // Reset position safely
     
-    // Play MP3 background music intuitively natively
-    const bgAudio = document.getElementById('bgAudio');
-    if (bgAudio) {
-        bgAudio.play().catch(e => console.warn("Audio autoplay natively blocked by browser:", e));
-    }
-
-    // Lazy-load + autoplay the YouTube embed (user gesture from Open click allows sound)
-    const ytFrame = document.getElementById('ytFrame');
-    if (ytFrame && !ytFrame.src) {
-        ytFrame.src = ytFrame.dataset.src;
-    }
+    // Start background music inside this user gesture (the Open click).
+    // The YT API player was cued on load; this is what browsers allow to
+    // unmute + play. If the player is still loading, startBackgroundMusic()
+    // waits for onReady and plays as soon as it can.
+    startBackgroundMusic();
 
 
     // GSAP Timeline for opening exactly replacing the CSS behavior
@@ -624,23 +618,142 @@ function fetchWishes() {
         .catch(error => console.error('Silent error fetching database wishes:', error));
 }
 
-// Background Audio Toggling
-function toggleAudio() {
-    const bgAudio = document.getElementById('bgAudio');
-    const audioIcon = document.getElementById('audioIcon');
-    const audioControl = document.getElementById('audioControl');
+// ═══════════════════════════════════════════════════════════════════
+// Background Music — YouTube IFrame API (invait-style architecture)
+// One hidden-but-mountable YT.Player. Cue on load, play on the
+// "Open" gesture, toggle via the floating button, loop at song end.
+// ═══════════════════════════════════════════════════════════════════
 
-    if (bgAudio) {
-        if (bgAudio.paused || bgAudio.muted) {
-            bgAudio.muted = false;
-            bgAudio.play().catch(e => console.log('Playback prevented by browser', e));
-            audioIcon.className = 'fa-solid fa-volume-high';
-            audioControl.classList.remove('muted');
-        } else {
-            bgAudio.pause();
-            audioIcon.className = 'fa-solid fa-volume-xmark';
-            audioControl.classList.add('muted');
+// Song config: video ID + start offset (seconds) from the old ?start=7 URL
+const MUSIC_VIDEO_ID = 'k85mRPqvMbE';
+const MUSIC_START_SECONDS = 7;
+
+window.ytPlayerReady = false;
+window.ytApiReady = false;
+let musicCued = false;
+
+// Parse a YouTube URL/ID into a bare video ID (youtu.be / ?v= / /embed/ formats)
+function extractVideoId(url) {
+    const u = String(url || '').trim();
+    let m = u.match(/youtu\.be\/([A-Za-z0-9_-]{6,})/); if (m) return m[1];
+    m = u.match(/[?&]v=([A-Za-z0-9_-]{6,})/);          if (m) return m[1];
+    m = u.match(/youtube\.com\/embed\/([A-Za-z0-9_-]{6,})/); if (m) return m[1];
+    return /^[A-Za-z0-9_-]{6,}$/.test(u) ? u : null;
+}
+
+// Load the IFrame API once; onYouTubeIframeAPIReady creates the player
+(function loadYouTubeApi() {
+    const s = document.createElement('script');
+    s.src = 'https://www.youtube.com/iframe_api';
+    s.onerror = () => console.warn('YouTube API failed to load - music unavailable');
+    document.head.appendChild(s);
+
+    // Fallback: if the API never becomes ready, still mark the open flow done
+    setTimeout(() => {
+        if (!window.ytApiReady && !window.ytPlayerReady) console.warn('YouTube API not ready after 8s');
+    }, 8000);
+})();
+
+window.onYouTubeIframeAPIReady = function () {
+    window.ytApiReady = true;
+    window.ytMusicPlayer = new YT.Player('ytPlayer', {
+        width: 245,
+        height: 138,
+        videoId: MUSIC_VIDEO_ID,
+        playerVars: {
+            autoplay: 0,      // cue only - real playback starts on the Open gesture
+            controls: 0,      // our own UI controls playback
+            rel: 0,
+            modestbranding: 1,
+            playsinline: 1    // required for iOS inline playback
+        },
+        events: {
+            onReady: () => {
+                window.ytPlayerReady = true;
+                // Cue at the song's start offset without playing (autoplay-safe)
+                window.ytMusicPlayer.cueVideoById({
+                    videoId: MUSIC_VIDEO_ID,
+                    startSeconds: MUSIC_START_SECONDS
+                });
+                musicCued = true;
+            },
+            onStateChange: onMusicStateChange
         }
+    });
+};
+
+// Mirror real player state into the button icon (single source of truth)
+function onMusicStateChange(event) {
+    const S = YT.PlayerState;
+    if (event.data === S.PLAYING) {
+        setMusicIcon(true);
+    } else if (event.data === S.PAUSED || event.data === S.ENDED) {
+        setMusicIcon(false);
+        // Loop: restart from the song's start offset when it ends
+        if (event.data === S.ENDED) {
+            window.ytMusicPlayer.seekTo(MUSIC_START_SECONDS, true);
+            window.ytMusicPlayer.playVideo();
+        }
+    }
+}
+
+function setMusicIcon(playing) {
+    const icon = document.getElementById('audioIcon');
+    const control = document.getElementById('audioControl');
+    if (icon) icon.className = playing ? 'fa-solid fa-volume-high' : 'fa-solid fa-volume-xmark';
+    if (control) control.classList.toggle('muted', !playing);
+}
+
+// Start music - called from openInvitation() inside the user gesture chain
+function startBackgroundMusic() {
+    // Player created but not cued yet (API raced the Open click): play once ready
+    if (window.ytApiReady && !window.ytPlayerReady) {
+        const waitReady = setInterval(() => {
+            if (window.ytPlayerReady) {
+                clearInterval(waitReady);
+                startBackgroundMusic();
+            }
+        }, 100);
+        setTimeout(() => clearInterval(waitReady), 8000);
+        return;
+    }
+    if (!window.ytPlayerReady || !window.ytMusicPlayer) return;
+    try {
+        window.ytMusicPlayer.unMute();
+        if (musicCued) {
+            window.ytMusicPlayer.playVideo();
+        } else {
+            window.ytMusicPlayer.loadVideoById({
+                videoId: MUSIC_VIDEO_ID,
+                startSeconds: MUSIC_START_SECONDS
+            });
+            musicCued = true;
+        }
+    } catch (e) {
+        console.warn('Music start failed:', e);
+    }
+}
+
+// Floating button toggle: when collapsed the first click just opens the
+// panel; once expanded the icon is a real play/pause. The icon always
+// reflects actual player state via onStateChange.
+function toggleAudio() {
+    const control = document.getElementById('audioControl');
+    if (control && !control.classList.contains('expanded')) {
+        control.classList.add('expanded');
+        return;
+    }
+    if (!window.ytPlayerReady || !window.ytMusicPlayer) {
+        // Not ready yet: start it as soon as this gesture allows
+        startBackgroundMusic();
+        return;
+    }
+    const state = window.ytMusicPlayer.getPlayerState();
+    if (state === YT.PlayerState.PLAYING) {
+        window.ytMusicPlayer.pauseVideo();   // icon updates via onStateChange
+    } else {
+        window.ytMusicPlayer.unMute();
+        window.ytMusicPlayer.playVideo();
     }
 }
 
@@ -650,7 +763,8 @@ function toggleAudio() {
     if (!audioControl) return;
 
     audioControl.addEventListener('click', (e) => {
-        // Expand/collapse without touching iframe src; playback is controlled by openInvitation() and the toggle button
+        // Ignore clicks that came from the inner toggle button (it has its own handler)
+        if (e.target.closest('.audio-toggle')) return;
         const expanding = !audioControl.classList.contains('expanded');
         audioControl.classList.toggle('expanded', expanding);
         e.stopPropagation();

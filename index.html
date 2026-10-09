@@ -330,22 +330,16 @@
             <i class="fa-regular fa-hand-pointer"></i>
         </div>
 
-        <!-- Floating Audio Control (expands into music panel on click) -->
+        <!-- Floating Audio Control (expands into music panel on click).
+             #ytPlayer is a mount point: the YouTube IFrame API replaces it with
+             a controllable player iframe on first open. -->
         <div class="audio-control" id="audioControl">
             <div class="audio-panel" id="audioPanel">
-                <iframe id="ytFrame"
-                    data-src="https://www.yout-ube.com/embed/k85mRPqvMbE?si=hT0_-_elAPRfi8hr&amp;start=7&amp;autoplay=1"
-                    title="YouTube video player"
-                    frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; autoplay"
-                    referrerpolicy="strict-origin-when-cross-origin"
-                    allowfullscreen>
-                </iframe>
+                <div id="ytPlayer"></div>
             </div>
             <button class="audio-toggle" onclick="toggleAudio()" aria-label="Toggle music">
                 <i class="fa-solid fa-volume-high" id="audioIcon"></i>
             </button>
-            <!-- <audio id="bgAudio" src="song/background-music.mp3" preload="auto" loop></audio> -->
         </div>
     </div>
 
