@@ -701,7 +701,10 @@ function onMusicStateChange(event) {
 function setMusicIcon(playing) {
     const icon = document.getElementById('audioIcon');
     const control = document.getElementById('audioControl');
-    if (icon) icon.className = playing ? 'fa-solid fa-volume-high' : 'fa-solid fa-volume-xmark';
+    if (icon) {
+        icon.className = 'material-symbols-outlined';
+        icon.textContent = playing ? 'music_note' : 'music_off';
+    }
     if (control) control.classList.toggle('muted', !playing);
 }
 
