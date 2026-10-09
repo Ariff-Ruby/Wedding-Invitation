@@ -150,7 +150,7 @@ body {
     z-index: 0;
     background-image:
         linear-gradient(rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.35)),
-        url("images/gambar1.jpeg?v=2");
+        url("images/gambar2.jpeg");
     background-size: cover;
     background-position: center 25%; /* bias toward faces; crop happens at feet/sky */
     background-repeat: no-repeat;
