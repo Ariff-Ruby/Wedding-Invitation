@@ -23,7 +23,9 @@ function openInvitation() {
             // Need to remove display:none on invitation-section early so GSAP can calculate it
             const invSection = document.querySelector('.invitation-section');
             invSection.style.display = 'block';
-            invSection.style.opacity = '1'; // Make it visible IMMEDIATELY so entrance animations can be seen!
+            invSection.style.opacity = '1';
+            // Hero itself starts hidden: it fades in only AFTER the cover fades out
+            gsap.set('.hero-section', { autoAlpha: 0 });
         },
         onComplete: () => {
             container.classList.add('opened');
@@ -111,7 +113,7 @@ function openInvitation() {
       // 3. Hero section fades in as one unit AFTER the cover is gone
         .fromTo('.hero-section',
             { autoAlpha: 0 },
-            { autoAlpha: 1, duration: 0.8, ease: "power2.out" }
+            { autoAlpha: 1, duration: 0.8, ease: "power2.out", clearProps: "visibility" }
         )
       // 4. Inner Flowers smoothly slide in from the outer edge to their origin
         .fromTo('.inner-flower', 
