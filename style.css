@@ -163,7 +163,7 @@ body {
     left: 0;
     z-index: 1;
     pointer-events: none;
-    opacity: 0; 
+    opacity: 0;
     object-fit: contain;
     will-change: transform, opacity; /* Force hardware acceleration */
 }
@@ -254,15 +254,15 @@ body {
     max-width: 400px;
     height: 65px;
     background: rgba(255, 255, 255, 0.7); /* Slightly translucent glass effect */
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
     align-items: center;
     z-index: 20;
     border: 1px solid rgba(255, 255, 255, 0.8); /* Refined glass border completely around */
     border-radius: 40px; /* Fully rounded "pill" shape */
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12); /* Soft floating drop shadow */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3); /* Soft floating drop shadow */
     pointer-events: none;
     opacity: 0;
     transition: opacity 1s ease;
@@ -279,7 +279,6 @@ body {
     align-items: center;
     text-decoration: none;
     color: #4a4a4a;
-    transition: color 0.3s;
     transition: 0.3s ease;
 }
 
@@ -295,6 +294,34 @@ body {
 
 .nav-item:hover {
     transform: scale(1.3);
+}
+
+/* Main (Location) nav item: big raised circle in the middle */
+.nav-item-main {
+    width: 58px;
+    height: 58px;
+    margin-top: -22px; /* lift above the pill edge */
+    margin-left: -6px; /* pull neighbors slightly closer */
+    margin-right: -6px;
+    background: #ffffff;
+    border-radius: 50%;
+    justify-content: center;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+}
+
+.nav-item-main i {
+    font-size: 22px;
+    margin-bottom: 2px;
+    color: #4a4a4a;
+}
+
+.nav-item-main span {
+    font-size: 8px;
+}
+
+.nav-item-main:hover {
+    transform: scale(1.1);
 }
 
 /* --- Popups --- */
@@ -490,6 +517,37 @@ body {
 
 /* Calendar specific */
 .calendar-buttons { width: 100%; display: flex; flex-direction: column; }
+
+/* --- Second + Third Sections: continuous blurred photo band --- */
+.photo-band {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.photo-band::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background-image: url("images/gambar3.jpeg?v=2");
+    background-size: cover;
+    background-position: center 25%;
+    background-repeat: no-repeat;
+    filter: blur(8px);
+    transform: scale(1.1); /* hide blurred edge fringing */
+    pointer-events: none;
+}
+
+/* Soft white veil so text stays readable */
+.photo-band::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: rgba(255, 255, 255, 0.45);
+    pointer-events: none;
+}
 
 /* --- Second Section: Countdown --- */
 .countdown-section {

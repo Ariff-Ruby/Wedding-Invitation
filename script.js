@@ -75,7 +75,7 @@ function openInvitation() {
                     ease: "none"
                 });
             });
-            
+
             // Auto-scroll logic
             setTimeout(() => {
                 let isAutoScrolling = true;
@@ -116,13 +116,13 @@ function openInvitation() {
             { autoAlpha: 1, duration: 0.8, ease: "power2.out", clearProps: "visibility" }
         )
       // 4. Inner Flowers smoothly slide in from the outer edge to their origin
-        .fromTo('.inner-flower', 
-            { 
-                x: (i, target) => target.classList.contains('flower-5') ? 0 : -150, 
-                y: (i, target) => target.classList.contains('flower-5') ? 150 : 0, 
-                opacity: 0 
+        .fromTo('.inner-flower',
+            {
+                x: (i, target) => target.classList.contains('flower-5') ? 0 : -150,
+                y: (i, target) => target.classList.contains('flower-5') ? 150 : 0,
+                opacity: 0
             },
-            { x: 0, y: 0, opacity: 1, duration: 1.8, ease: "power2.out" }, 
+            { x: 0, y: 0, opacity: 1, duration: 1.8, ease: "power2.out" },
             "-=0.5"
         )
       // 5. Invitation Content gently lifts into place
@@ -199,7 +199,10 @@ END:VCALENDAR`;
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 
     if (isIOS) {
-        window.location.href = "data:text/calendar;base64," + btoa(icsContent);
+        // UTF-8 safe base64: btoa alone breaks on non-ASCII characters
+        const bytes = new TextEncoder().encode(icsContent);
+        const binString = String.fromCharCode(...bytes);
+        window.location.href = "data:text/calendar;base64," + btoa(binString);
     } else {
         const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
         const url = window.URL.createObjectURL(blob);
@@ -245,10 +248,13 @@ function fallbackCopy(text, button) {
 function showCopySuccess(button) {
     const originalClass = button.className;
     const originalColor = button.style.color;
-    
+
     button.className = 'fa-solid fa-check copy-icon';
     button.style.color = '#25D366'; // Green success visual
-    
+
+    // Haptic-style feedback: quick pop bounce on the icon
+    gsap.fromTo(button, { scale: 1.6 }, { scale: 1, duration: 0.5, ease: 'elastic.out(1, 0.5)', overwrite: 'auto' });
+
     setTimeout(() => {
         button.className = originalClass;
         button.style.color = originalColor;
@@ -269,11 +275,23 @@ function updateCountdown() {
 
         const daysEl = document.getElementById("days");
         if(daysEl) {
-            daysEl.innerText = days.toString().padStart(2, '0');
-            document.getElementById("hours").innerText = hours.toString().padStart(2, '0');
-            document.getElementById("minutes").innerText = minutes.toString().padStart(2, '0');
-            document.getElementById("seconds").innerText = seconds.toString().padStart(2, '0');
+            setCountValue("days", days);
+            setCountValue("hours", hours);
+            setCountValue("minutes", minutes);
+            setCountValue("seconds", seconds);
         }
+    }
+}
+
+// Writes a padded value and pulses the box only when the digit changes
+function setCountValue(id, value) {
+    const el = document.getElementById(id);
+    const text = value.toString().padStart(2, '0');
+    if (el.innerText === text) return;
+    el.innerText = text;
+    const box = el.closest('.time-box');
+    if (box) {
+        gsap.fromTo(box, { scale: 1.15 }, { scale: 1, duration: 0.4, ease: 'power2.out', overwrite: 'auto' });
     }
 }
 setInterval(updateCountdown, 1000);
@@ -351,20 +369,8 @@ document.addEventListener("DOMContentLoaded", () => {
             y: flower.y,
             rotation: flower.rotation,
             opacity: 0,
-            ease: "none" // Crucial for smooth scrubbing
+            ease: "none"
         });
-    });
-
-    gsap.to('.hero-section', {
-        scrollTrigger: {
-            trigger: '.hero-section',
-            start: "top top",
-            end: "bottom 30%",
-            scrub: true // Ties the animation smoothly directly to the scrollbar
-        },
-        y: -80,
-        opacity: 0,
-        ease: "none"
     });
 });
 
